@@ -100,23 +100,44 @@ def actualizar_usuario():
 
         nuevo_nombre = input(f"Nombre [{usuario['nombre']}]: ").strip()
         if nuevo_nombre:
-            usuario['nombre'] = nuevo_nombre
+            if len(nuevo_nombre) < 2 or len(nuevo_nombre) > 50:
+                print("ERROR: El nombre debe tener entre 2 y 50 caracteres.")
+            elif not nuevo_nombre.replace(" ", "").isalpha():
+                print("ERROR: El nombre solo debe contener letras y espacios.")
+            else:
+                usuario['nombre'] = nuevo_nombre
 
         nuevo_apellido = input(f"Apellido [{usuario['apellido']}]: ").strip()
         if nuevo_apellido:
-            usuario['apellido'] = nuevo_apellido
+            if len(nuevo_apellido) < 2 or len(nuevo_apellido) > 50:
+                print("ERROR: El apellido debe tener entre 2 y 50 caracteres.")
+            elif not nuevo_apellido.replace(" ", "").isalpha():
+                print("ERROR: El apellido solo debe contener letras y espacios.")
+            else:
+                usuario['apellido'] = nuevo_apellido
 
         nuevo_email = input(f"Email [{usuario['email']}]: ").strip()
         if nuevo_email:
-            usuario['email'] = nuevo_email
+            import re
+            patron = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+            if re.match(patron, nuevo_email):
+                usuario['email'] = nuevo_email
+            else:
+                print("ERROR: Correo electrónico inválido. Ejemplo: usuario@dominio.com")
 
         nuevo_telefono = input(f"Teléfono [{usuario['telefono']}]: ").strip()
         if nuevo_telefono:
-            usuario['telefono'] = nuevo_telefono
+            if nuevo_telefono.isdigit() and len(nuevo_telefono) >= 8 and len(nuevo_telefono) <= 15:
+                usuario['telefono'] = nuevo_telefono
+            else:
+                print("ERROR: Teléfono inválido. Debe contener entre 8 y 15 dígitos.")
 
         nueva_direccion = input(f"Dirección [{usuario['direccion']}]: ").strip()
         if nueva_direccion:
-            usuario['direccion'] = nueva_direccion
+            if len(nueva_direccion) < 5 or len(nueva_direccion) > 100:
+                print("ERROR: La dirección debe tener entre 5 y 100 caracteres.")
+            else:
+                usuario['direccion'] = nueva_direccion
 
         guardar_datos(ARCHIVO_USUARIOS, usuarios)
         print("\n Usuario actualizado exitosamente.")

@@ -110,14 +110,28 @@ def actualizar_libro():
             libro['isbn'] = nuevo_isbn
 
         nuevo_año = input(f"Año [{libro['año_publicacion']}]: ").strip()
-        if nuevo_año and nuevo_año.isdigit():
-            libro['año_publicacion'] = int(nuevo_año)
+        if nuevo_año:
+            try:
+                año_validado = int(nuevo_año)
+                if año_validado < 1500 or año_validado > 2026:
+                    print("ERROR: El año debe estar entre 1500 y 2026.")
+                else:
+                    libro['año_publicacion'] = año_validado
+            except ValueError:
+                print("ERROR: Debe ingresar un año válido (solo números).")
 
         nueva_cantidad = input(f"Cantidad de copias [{libro['cantidad_copias']}]: ").strip()
-        if nueva_cantidad and nueva_cantidad.isdigit():
-            diferencia = int(nueva_cantidad) - libro['cantidad_copias']
-            libro['cantidad_copias'] = int(nueva_cantidad)
-            libro['copias_disponibles'] += diferencia
+        if nueva_cantidad:
+            try:
+                cantidad_validada = int(nueva_cantidad)
+                if cantidad_validada < 1 or cantidad_validada > 1000:
+                    print("ERROR: La cantidad debe estar entre 1 y 1000.")
+                else:
+                    diferencia = cantidad_validada - libro['cantidad_copias']
+                    libro['cantidad_copias'] = cantidad_validada
+                    libro['copias_disponibles'] += diferencia
+            except ValueError:
+                print("ERROR: Debe ingresar un número válido (solo números).")
 
         guardar_datos(ARCHIVO_LIBROS, libros)
         print("\nLibro actualizado exitosamente.")

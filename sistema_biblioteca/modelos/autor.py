@@ -88,15 +88,30 @@ def actualizar_autor():
 
         nuevo_nombre = input(f"Nombre [{autor['nombre']}]: ").strip()
         if nuevo_nombre:
-            autor['nombre'] = nuevo_nombre
+            if len(nuevo_nombre) < 2 or len(nuevo_nombre) > 50:
+                print("ERROR: El nombre debe tener entre 2 y 50 caracteres.")
+            elif not nuevo_nombre.replace(" ", "").isalpha():
+                print("ERROR: El nombre solo debe contener letras y espacios.")
+            else:
+                autor['nombre'] = nuevo_nombre
 
         nuevo_apellido = input(f"Apellido [{autor['apellido']}]: ").strip()
         if nuevo_apellido:
-            autor['apellido'] = nuevo_apellido
+            if len(nuevo_apellido) < 2 or len(nuevo_apellido) > 50:
+                print("ERROR: El apellido debe tener entre 2 y 50 caracteres.")
+            elif not nuevo_apellido.replace(" ", "").isalpha():
+                print("ERROR: El apellido solo debe contener letras y espacios.")
+            else:
+                autor['apellido'] = nuevo_apellido
 
         nueva_nacionalidad = input(f"Nacionalidad [{autor['nacionalidad']}]: ").strip()
         if nueva_nacionalidad:
-            autor['nacionalidad'] = nueva_nacionalidad
+            if len(nueva_nacionalidad) < 2 or len(nueva_nacionalidad) > 30:
+                print("ERROR: La nacionalidad debe tener entre 2 y 30 caracteres.")
+            elif not nueva_nacionalidad.replace(" ", "").isalpha():
+                print("ERROR: La nacionalidad solo debe contener letras y espacios.")
+            else:
+                autor['nacionalidad'] = nueva_nacionalidad
 
         guardar_datos(ARCHIVO_AUTORES, autores)
         print("\nAutor actualizado exitosamente.")

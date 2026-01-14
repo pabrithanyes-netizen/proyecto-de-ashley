@@ -87,11 +87,19 @@ def actualizar_categoria():
 
         nuevo_nombre = input(f"Nombre [{categoria['nombre']}]: ").strip()
         if nuevo_nombre:
-            categoria['nombre'] = nuevo_nombre
+            if len(nuevo_nombre) < 3 or len(nuevo_nombre) > 50:
+                print("ERROR: El nombre debe tener entre 3 y 50 caracteres.")
+            elif not nuevo_nombre.replace(" ", "").isalpha():
+                print("ERROR: El nombre solo debe contener letras y espacios.")
+            else:
+                categoria['nombre'] = nuevo_nombre
 
         nueva_descripcion = input(f"Descripción [{categoria['descripcion']}]: ").strip()
         if nueva_descripcion:
-            categoria['descripcion'] = nueva_descripcion
+            if len(nueva_descripcion) < 5 or len(nueva_descripcion) > 200:
+                print("ERROR: La descripción debe tener entre 5 y 200 caracteres.")
+            else:
+                categoria['descripcion'] = nueva_descripcion
 
         guardar_datos(ARCHIVO_CATEGORIAS, categorias)
         print("\nCategoría actualizada exitosamente.")
